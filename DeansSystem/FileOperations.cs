@@ -12,13 +12,13 @@ namespace DeansSystem
         public FileOperations(string p, string fileName)
         {
             this.path = Path.Combine(p, fileName);
-        }
-        public void AddToFile(string line)
-        {
             if (!File.Exists(path))
             {
                 using (File.Create(path)) { }
             }
+        }
+        public void AddToFile(string line)
+        {
             using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.Default))
             {
                 sw.WriteLine(line);
