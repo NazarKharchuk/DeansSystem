@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace DeansSystem
 {
@@ -32,16 +32,19 @@ namespace DeansSystem
                 if (accessLevel == 3)
                 {
                     _admin = new Admin(login, path, fileName);
+                    _output.welcome(login);
                     _output.AdminCommands();
                 }
                 else if (accessLevel == 2)
                 {
                     _teacher = new Teacher(login, path, marksFile);
+                    _output.welcome(login);
                     _output.TeacherCommands();
                 }
                 else if (accessLevel == 1)
                 {
                     _student = new Student(login, path, marksFile);
+                    _output.welcome(login);
                     _output.StudentCommands();
                 }
             }

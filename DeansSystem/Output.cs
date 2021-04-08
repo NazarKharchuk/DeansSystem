@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace DeansSystem
@@ -14,22 +14,28 @@ namespace DeansSystem
 
         public void StartWork()
         {
-            Console.WriteLine("Enter your login:");
+            Console.Write("Enter your login: ");
             login = Console.ReadLine();
             _user = new User(login, path, logsFile);
-            Console.WriteLine("Enter your password:");
+            Console.Write("Enter your password: ");
             string password = Console.ReadLine();
             _user.Authorization(password);
         }
+
+        public void welcome(string login)
+        {
+            Console.Clear();
+            Console.WriteLine($"Wellcome back, {login}!\n");
+        }
         public void AdminCommands()
         {
-            Console.WriteLine($"Wellcome back, {login}");
             Admin admin = new Admin(login, path, logsFile);
             Console.WriteLine("Your functional:");
-            Console.WriteLine("Enter '1' to add user \n" + "Enter '2' to remove user \n" + "Enter '3' to change user information \n" + "Enter '4' to change student's group \n" + "Enter '5' to change student's course \n" + "Enter '6' to exit");
+            Console.WriteLine("Enter '1' to add user \n" + "Enter '2' to remove user \n" + "Enter '3' to change user information \n" + "Enter '4' to change student's group \n" + "Enter '5' to change student's course \n" + "Enter '6' to check student's course \n" + "Enter '7' to check student's group \n" + "Enter '8' to check student's marks \n" + "Enter '9' to exit");
             int command = Int32.Parse(Console.ReadLine());
-            if (command == 6) Environment.Exit(0);
-            Console.WriteLine("Enter user's login:");
+            Console.Clear();
+            if (command == 9) Environment.Exit(0);
+            Console.Write("Enter user's login: ");
             string userLogin = Console.ReadLine();
             if (command == 1)
             {
@@ -53,11 +59,13 @@ namespace DeansSystem
                 admin.ChangeGroup(userLogin, group, studentsFile);
             }
             else if (command == 5) admin.ChangeCourse(login, studentsFile);
+            else if (command == 6) admin.CheckCourse(login);
+            else if (command == 7) admin.CheckGroup(login);
+            else if (command == 8) admin.CheckMarks(login);
             AdminCommands();
         }
         public void TeacherCommands()
         {
-            Console.WriteLine($"Wellcome back, {login}");
             Teacher teacher = new Teacher(login, path, marksFile);
             Console.WriteLine("Your functional:");
             Console.WriteLine("Enter '1' to change student's marks \n" + "Enter '2' to watch student's marks \n" + "Enter '3' to watch all students marks \n" + "Enter '4' to exit");
@@ -82,7 +90,6 @@ namespace DeansSystem
         }
         public void StudentCommands()
         {
-            Console.WriteLine($"Wellcome back, {login}");
             Student student = new Student(login, path, marksFile);
             Console.WriteLine("Your functional:");
             Console.WriteLine("Enter '1' to check your marks \n" + "Enter '2' to check your group \n" + "Enter '3' to check your course \n" + "Enter '4' to exit");
