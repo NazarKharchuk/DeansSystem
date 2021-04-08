@@ -14,12 +14,24 @@ namespace DeansSystem
 
         public void StartWork()
         {
-            Console.Write("Enter your login: ");
-            login = Console.ReadLine();
-            _user = new User(login, path, logsFile);
-            Console.Write("Enter your password: ");
-            string password = Console.ReadLine();
-            _user.Authorization(password);
+            for (int i = 0; i<3; i++)
+            {
+                while (true)
+                {
+                    Console.Write("Enter your login: ");
+                    login = Console.ReadLine();
+                    if (login != "") break;
+                    Console.WriteLine("\nError: Empty login! Try again:\n");
+                }
+                _user = new User(login, path, logsFile);
+                Console.Write("Enter your password: ");
+                string password = Console.ReadLine();
+                bool flag = _user.Authorization(password);
+                if (flag) break;
+            }
+            Console.Clear();
+            Console.WriteLine("To many atemptions! Try again later.");
+            Environment.Exit(1);
         }
 
         public void welcome(string login)
