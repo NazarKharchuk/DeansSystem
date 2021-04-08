@@ -74,13 +74,16 @@ namespace DeansSystem
             else if (command == 6) admin.CheckCourse(login);
             else if (command == 7) admin.CheckGroup(login);
             else if (command == 8) admin.CheckMarks(login);
+            else Console.WriteLine("Incorrect input!");
             AdminCommands();
         }
+        
         public void TeacherCommands()
         {
+            Console.WriteLine($"Wellcome back, {login}");
             Teacher teacher = new Teacher(login, path, marksFile);
             Console.WriteLine("Your functional:");
-            Console.WriteLine("Enter '1' to change student's marks \n" + "Enter '2' to watch student's marks \n" + "Enter '3' to watch all students marks \n" + "Enter '4' to exit");
+            Console.WriteLine("Enter '1' to change student's marks \n" + "Enter '2' to watch student's marks \n" + "Enter '3' to watch all students marks \n" + "Enter '4' to check student's course \n" + "Enter '5' to check student's group \n" + "Enter '6' to exit");
             int command = Int32.Parse(Console.ReadLine());
             if (command == 1)
             {
@@ -97,9 +100,23 @@ namespace DeansSystem
                 teacher.WatchStudent(userLogin);
             }
             else if (command == 3) teacher.WatchAllInformation();
-            else if (command == 4) Environment.Exit(0);
+            else if (command == 4)
+            {
+                Console.WriteLine("Enter student's login:");
+                string userLogin = Console.ReadLine();
+                teacher.CheckCourse(userLogin);
+            }
+            else if (command == 5)
+            {
+                Console.WriteLine("Enter student's login:");
+                string userLogin = Console.ReadLine();
+                teacher.CheckGroup(userLogin);
+            }
+            else if (command == 6) Environment.Exit(0);
+            else Console.WriteLine("Incorrect input!");
             TeacherCommands();
         }
+
         public void StudentCommands()
         {
             Student student = new Student(login, path, marksFile);
@@ -110,6 +127,7 @@ namespace DeansSystem
             else if (command == 2) student.CheckGroup();
             else if (command == 3) student.CheckCourse();
             else if (command == 4) Environment.Exit(0);
+            else Console.WriteLine("Incorrect input!");
             StudentCommands();
         }
         public void WrongInput() => Console.WriteLine("Wrong input");
