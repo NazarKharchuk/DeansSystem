@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace DeansSystem
 {
@@ -21,7 +21,7 @@ namespace DeansSystem
             fo = new FileOperations(path, fileName);
             _output = new Output();
         }
-        public void Authorization(string password)
+        public bool Authorization(string password)
         {
             string line = login + "," + password;
             if (fo.IsExists(line) == true)
@@ -32,20 +32,29 @@ namespace DeansSystem
                 if (accessLevel == 3)
                 {
                     _admin = new Admin(login, path, fileName);
+                    _output.welcome(login);
                     _output.AdminCommands();
+                    return true;
                 }
                 else if (accessLevel == 2)
                 {
                     _teacher = new Teacher(login, path, marksFile);
+                    _output.welcome(login);
                     _output.TeacherCommands();
+                    return true;
                 }
-                else if (accessLevel == 1)
+                else
                 {
                     _student = new Student(login, path, marksFile);
+                    _output.welcome(login);
                     _output.StudentCommands();
+                    return true;
                 }
             }
-            else _output.WrongInput();
+            else {
+                _output.WrongInput();
+                return false;
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace DeansSystem
 {
@@ -18,6 +18,13 @@ namespace DeansSystem
         {
             string line = loginToAdd + "," + password + "," + accessLevel;
             fo.AddToFile(line);
+            if (Convert.ToInt32(accessLevel) == 1)
+            {
+                FileOperations fileOps = new FileOperations(path, _output.studentsFile);
+                fileOps.AddToFile(loginToAdd);
+                fileOps = new FileOperations(path, _output.marksFile);
+                fileOps.AddToFile(loginToAdd);
+            }
         }
         public void RemoveUser(string loginToRemove) => fo.RemoveFromFile(loginToRemove);
         public void ChangeUserInformation(string loginToChange, string newLine) => fo.ChangeInFile(loginToChange, newLine);
@@ -46,9 +53,9 @@ namespace DeansSystem
             for (int i = 0; i < splited.Length; i++)
             {
                 int x = 0;
-                if (Int32.TryParse(splited[i],out x))
+                if (Int32.TryParse(splited[i], out x))
                 {
-                    total += (float) Int32.Parse(splited[i]) / 100;
+                    total += (float)Int32.Parse(splited[i]) / 100;
                     marksNumber++;
                 }
             }
@@ -69,5 +76,18 @@ namespace DeansSystem
                 _output.Success();
             }
         }
+        public void CheckGroup(string st_login)
+        {
+            fo = new FileOperations(_output.path, _output.studentsFile);
+            string[] splited = fo.GetLine(st_login).Split(",", StringSplitOptions.RemoveEmptyEntries);
+            Console.WriteLine(st_login + "'s group: "); _output.LineOutput(splited[splited.Length - 2]);
+        }
+        public void CheckCourse(string st_login)
+        {
+            fo = new FileOperations(_output.path, _output.studentsFile);
+            string[] splited = fo.GetLine(st_login).Split(",", StringSplitOptions.RemoveEmptyEntries);
+            Console.Write(st_login+"'s course: "); _output.LineOutput(splited[splited.Length - 1]);
+        }
+        public void CheckMarks(string st_login) => _output.LineOutput(fo.GetLine(st_login));
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace DeansSystem
@@ -14,22 +14,41 @@ namespace DeansSystem
 
         public void StartWork()
         {
-            Console.WriteLine("Enter your login:");
-            login = Console.ReadLine();
-            _user = new User(login, path, logsFile);
-            Console.WriteLine("Enter your password:");
-            string password = Console.ReadLine();
-            _user.Authorization(password);
+            for (int i = 0; i<3; i++)
+            {
+                while (true)
+                {
+                    Console.Write("Enter your login: ");
+                    login = Console.ReadLine();
+                    if (login != "") break;
+                    Console.WriteLine("\nError: Empty login! Try again:\n");
+                }
+                _user = new User(login, path, logsFile);
+                Console.Write("Enter your password: ");
+                string password = Console.ReadLine();
+                bool flag = _user.Authorization(password);
+                if (flag) break;
+            }
+            Console.Clear();
+            Console.WriteLine("To many atemptions! Try again later.");
+            Environment.Exit(1);
+        }
+
+        public void welcome(string login)
+        {
+            Console.Clear();
+            Console.WriteLine($"Wellcome back, {login}!\n");
         }
         public void AdminCommands()
         {
-            Console.WriteLine($"Wellcome back, {login}");
+            Console.WriteLine("Wellcome back!");
             Admin admin = new Admin(login, path, logsFile);
             Console.WriteLine("Your functional:");
-            Console.WriteLine("Enter '1' to add user \n" + "Enter '2' to remove user \n" + "Enter '3' to change user information \n" + "Enter '4' to change student's group \n" + "Enter '5' to change student's course \n" + "Enter '6' to exit");
+            Console.WriteLine("Enter '1' to add user \n" + "Enter '2' to remove user \n" + "Enter '3' to change user information \n" + "Enter '4' to change student's group \n" + "Enter '5' to change student's course \n" + "Enter '6' to check student's course \n" + "Enter '7' to check student's group \n" + "Enter '8' to check student's marks \n" + "Enter '9' to exit");
             int command = Int32.Parse(Console.ReadLine());
-            if (command == 6) Environment.Exit(0);
-            Console.WriteLine("Enter user's login:");
+            Console.Clear();
+            if (command == 9) Environment.Exit(0);
+            Console.Write("Enter user's login: ");
             string userLogin = Console.ReadLine();
             if (command == 1)
             {
@@ -53,14 +72,19 @@ namespace DeansSystem
                 admin.ChangeGroup(userLogin, group, studentsFile);
             }
             else if (command == 5) admin.ChangeCourse(login, studentsFile);
+            else if (command == 6) admin.CheckCourse(login);
+            else if (command == 7) admin.CheckGroup(login);
+            else if (command == 8) admin.CheckMarks(login);
+            else Console.WriteLine("Incorrect input!");
             AdminCommands();
         }
+        
         public void TeacherCommands()
         {
-            Console.WriteLine($"Wellcome back, {login}");
+            Console.WriteLine("Wellcome back!");
             Teacher teacher = new Teacher(login, path, marksFile);
             Console.WriteLine("Your functional:");
-            Console.WriteLine("Enter '1' to change student's marks \n" + "Enter '2' to watch student's marks \n" + "Enter '3' to watch all students marks \n" + "Enter '4' to exit");
+            Console.WriteLine("Enter '1' to change student's marks \n" + "Enter '2' to watch student's marks \n" + "Enter '3' to watch all students marks \n" + "Enter '4' to check student's course \n" + "Enter '5' to check student's group \n" + "Enter '6' to exit");
             int command = Int32.Parse(Console.ReadLine());
             if (command == 1)
             {
@@ -77,9 +101,23 @@ namespace DeansSystem
                 teacher.WatchStudent(userLogin);
             }
             else if (command == 3) teacher.WatchAllInformation();
-            else if (command == 4) Environment.Exit(0);
+            else if (command == 4)
+            {
+                Console.WriteLine("Enter student's login:");
+                string userLogin = Console.ReadLine();
+                teacher.CheckCourse(userLogin);
+            }
+            else if (command == 5)
+            {
+                Console.WriteLine("Enter student's login:");
+                string userLogin = Console.ReadLine();
+                teacher.CheckGroup(userLogin);
+            }
+            else if (command == 6) Environment.Exit(0);
+            else Console.WriteLine("Incorrect input!");
             TeacherCommands();
         }
+
         public void StudentCommands()
         {
             Console.WriteLine($"Wellcome back, {login}");
@@ -91,6 +129,7 @@ namespace DeansSystem
             else if (command == 2) student.CheckGroup();
             else if (command == 3) student.CheckCourse();
             else if (command == 4) Environment.Exit(0);
+            else Console.WriteLine("Incorrect input!");
             StudentCommands();
         }
         public void WrongInput() => Console.WriteLine("Wrong input");

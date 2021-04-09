@@ -27,6 +27,17 @@ namespace DeansSystem
             List<string> infromation = fo.ReadAllFile();
             _output.ListOutput(infromation);
         }
+        public void CheckGroup(string st_login)
+        {
+            fo = new FileOperations(_output.path, _output.studentsFile);
+            string[] splited = fo.GetLine(st_login).Split(",", StringSplitOptions.RemoveEmptyEntries);
+            Console.Write(st_login+"'s group: "); _output.LineOutput(splited[splited.Length - 2]);
+        }
+        public void CheckCourse(string st_login)
+        {
+            fo = new FileOperations(_output.path, _output.studentsFile);
+            string[] splited = fo.GetLine(st_login).Split(",", StringSplitOptions.RemoveEmptyEntries);
+            Console.Write(st_login+"'s course: "); _output.LineOutput(splited[splited.Length - 1]);
+        }
     }
 }
-    
