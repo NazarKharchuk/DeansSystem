@@ -32,21 +32,21 @@ namespace DeansSystem
                 if (accessLevel == 3)
                 {
                     _admin = new Admin(login, path, fileName);
-                    _output.welcome(login);
+                    _output.Welcome(login);
                     _output.AdminCommands();
                     return true;
                 }
                 else if (accessLevel == 2)
                 {
                     _teacher = new Teacher(login, path, marksFile);
-                    _output.welcome(login);
+                    _output.Welcome(login);
                     _output.TeacherCommands();
                     return true;
                 }
                 else
                 {
                     _student = new Student(login, path, marksFile);
-                    _output.welcome(login);
+                    _output.Welcome(login);
                     _output.StudentCommands();
                     return true;
                 }
@@ -55,6 +55,23 @@ namespace DeansSystem
                 _output.WrongInput();
                 return false;
             }
+        }
+        public void ViewPassword()
+        {
+            string[] splited = fo.GetLine(login).Split(",", StringSplitOptions.RemoveEmptyEntries);
+            _output.LineOutput(splited[1]);
+        }
+        public void ViewLogin()
+        {
+            string[] splited = fo.GetLine(login).Split(",", StringSplitOptions.RemoveEmptyEntries);
+            _output.LineOutput(splited[0]);
+        }
+        public void ChangePassword(string newPassword)
+        {
+            string[] splited = fo.GetLine(login).Split(",", StringSplitOptions.RemoveEmptyEntries);
+            splited[1] = newPassword;
+            string line = String.Join(",", splited);
+            fo.ChangeInFile(login, line);
         }
     }
 }

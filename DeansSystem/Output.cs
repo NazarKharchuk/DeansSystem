@@ -34,20 +34,36 @@ namespace DeansSystem
             Environment.Exit(1);
         }
 
-        public void welcome(string login)
+        public void Welcome(string login)
         {
             Console.Clear();
             Console.WriteLine($"Wellcome back, {login}!\n");
         }
+        public void UserCommands()
+        {
+            _user = new User(login, path, logsFile);
+            Console.WriteLine("Your functional:");
+            Console.WriteLine("Enter '1' check your password \n" + "Enter '2' to check your login \n" + "Enter '3' to change your password \n");
+            int command = Int32.Parse(Console.ReadLine());
+            Console.Clear();
+            if (command == 1) _user.ViewPassword();
+            else if (command == 2) _user.ViewLogin();
+            else if (command == 3)
+            {
+                Console.WriteLine("Enter a new password:");
+                string password = Console.ReadLine();
+                _user.ChangePassword(password);
+            }
+        }
         public void AdminCommands()
         {
-            Console.WriteLine("Wellcome back!");
             Admin admin = new Admin(login, path, logsFile);
             Console.WriteLine("Your functional:");
-            Console.WriteLine("Enter '1' to add user \n" + "Enter '2' to remove user \n" + "Enter '3' to change user information \n" + "Enter '4' to change student's group \n" + "Enter '5' to change student's course \n" + "Enter '6' to check student's course \n" + "Enter '7' to check student's group \n" + "Enter '8' to check student's marks \n" + "Enter '9' to exit");
+            Console.WriteLine("Enter '1' to add user \n" + "Enter '2' to remove user \n" + "Enter '3' to change user information \n" + "Enter '4' to change student's group \n" + "Enter '5' to change student's course \n" + "Enter '6' to check student's course \n" + "Enter '7' to check student's group \n" + "Enter '8' to check student's marks \n" + "Enter '9' to exit \n" + "Enter '0' to open user's menu");
             int command = Int32.Parse(Console.ReadLine());
             Console.Clear();
             if (command == 9) Environment.Exit(0);
+            else if (command == 0) UserCommands(); AdminCommands();
             Console.Write("Enter user's login: ");
             string userLogin = Console.ReadLine();
             if (command == 1)

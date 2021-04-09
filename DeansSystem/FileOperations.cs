@@ -32,7 +32,7 @@ namespace DeansSystem
                 while (!sr.EndOfStream)
                 {
                     string item = sr.ReadLine();
-                    string[] splited = item.Split(", ", StringSplitOptions.RemoveEmptyEntries);
+                    string[] splited = item.Split(",", StringSplitOptions.RemoveEmptyEntries);
                     if (splited[0].Equals(login)) information.Add(line);
                     else information.Add(item);
                 }
@@ -74,7 +74,7 @@ namespace DeansSystem
                 {
                     item = sr.ReadLine();
                     string[] splited = item.Split(",", StringSplitOptions.RemoveEmptyEntries);
-                    if (splited[0].Equals(login)) return item;
+                    if (splited[0].Equals(login)) return item; break;
                 }
             }
             return item;
