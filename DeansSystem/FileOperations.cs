@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.IO;
 using System.Collections.Generic;
@@ -74,7 +74,7 @@ namespace DeansSystem
                 {
                     item = sr.ReadLine();
                     string[] splited = item.Split(",", StringSplitOptions.RemoveEmptyEntries);
-                    if (splited[0].Equals(login)) return item; break;
+                    if (splited[0].Equals(login)) { return item; break; }
                 }
             }
             return item;

@@ -5,7 +5,7 @@ namespace DeansSystem
 {
     public class Output
     {
-        private string login;
+        public static string login;
         public string path = Environment.CurrentDirectory;
         public string logsFile = @"logins.csv";
         public string studentsFile = @"students.csv";
@@ -47,7 +47,7 @@ namespace DeansSystem
             int command = Int32.Parse(Console.ReadLine());
             Console.Clear();
             if (command == 1) _user.ViewPassword();
-            else if (command == 2) _user.ViewLogin();
+            else if (command == 2) Console.WriteLine($"Your login: {login}");//_user.ViewLogin();
             else if (command == 3)
             {
                 Console.WriteLine("Enter a new password:");
@@ -97,10 +97,9 @@ namespace DeansSystem
 
         public void TeacherCommands()
         {
-            Console.WriteLine("Wellcome back!");
             Teacher teacher = new Teacher(login, path, marksFile);
             Console.WriteLine("Your functional:");
-            Console.WriteLine("Enter '1' to change student's marks \n" + "Enter '2' to watch student's marks \n" + "Enter '3' to watch all students marks \n" + "Enter '4' to check student's course \n" + "Enter '5' to check student's group \n" + "Enter '6' to exit");
+            Console.WriteLine("Enter '1' to change student's marks \n" + "Enter '2' to watch student's marks \n" + "Enter '3' to watch all students marks \n" + "Enter '4' to check student's course \n" + "Enter '5' to check student's group \n" + "Enter '6' to exit\n" + "Enter '0' to open user's menu");
             int command = Int32.Parse(Console.ReadLine());
             if (command == 1)
             {
@@ -110,6 +109,7 @@ namespace DeansSystem
                 string marks = Console.ReadLine();
                 teacher.ChangeMarks(userLogin, marks);
             }
+            else if (command == 0) {UserCommands(); TeacherCommands(); }
             else if (command == 2)
             {
                 Console.WriteLine("Enter student's login:");
@@ -136,12 +136,12 @@ namespace DeansSystem
 
         public void StudentCommands()
         {
-            Console.WriteLine($"Wellcome back, {login}");
             Student student = new Student(login, path, marksFile);
             Console.WriteLine("Your functional:");
-            Console.WriteLine("Enter '1' to check your marks \n" + "Enter '2' to check your group \n" + "Enter '3' to check your course \n" + "Enter '4' to exit");
+            Console.WriteLine("Enter '1' to check your marks \n" + "Enter '2' to check your group \n" + "Enter '3' to check your course \n" + "Enter '4' to exit\n" + "Enter '0' to open user's menu");
             int command = Int32.Parse(Console.ReadLine());
             if (command == 1) student.CheckYourMarks();
+            else if (command == 0) { UserCommands(); StudentCommands(); }
             else if (command == 2) student.CheckGroup();
             else if (command == 3) student.CheckCourse();
             else if (command == 4) Environment.Exit(0);
