@@ -69,9 +69,7 @@ namespace DeansSystem
         public void ChangePassword(string newPassword)
         {
             string[] splited = fo.GetLine(login).Split(",", StringSplitOptions.RemoveEmptyEntries);
-            splited[1] = newPassword;
-            string line = String.Join(",", splited);
-            fo.ChangeInFile(login, line);
+            fo.ChangeInFile(login, splited[0]+","+newPassword);
         }
     }
 }

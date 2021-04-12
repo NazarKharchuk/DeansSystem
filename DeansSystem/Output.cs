@@ -87,14 +87,14 @@ namespace DeansSystem
                 string group = Console.ReadLine();
                 admin.ChangeGroup(userLogin, group, studentsFile);
             }
-            else if (command == 5) admin.ChangeCourse(login, studentsFile);
-            else if (command == 6) admin.CheckCourse(login);
-            else if (command == 7) admin.CheckGroup(login);
-            else if (command == 8) admin.CheckMarks(login);
+            else if (command == 5) admin.ChangeCourse(st_login, studentsFile);
+            else if (command == 6) admin.CheckCourse(st_login);
+            else if (command == 7) admin.CheckGroup(st_login);
+            else if (command == 8) admin.CheckMarks(st_login);
             else Console.WriteLine("Incorrect input!");
             AdminCommands();
         }
-        
+
         public void TeacherCommands()
         {
             Console.WriteLine("Wellcome back!");
