@@ -14,14 +14,14 @@ namespace DeansSystem
             _output = new Output();
             this.path = path;
         }
-        public void AddUser(string loginToAdd, string password, string accessLevel)
+        public void AddUser(string loginToAdd, string password, string accessLevel, string group = "", string course = "1")
         {
             string line = loginToAdd + "," + password + "," + accessLevel;
             fo.AddToFile(line);
             if (Convert.ToInt32(accessLevel) == 1)
             {
                 FileOperations fileOps = new FileOperations(path, _output.studentsFile);
-                fileOps.AddToFile(loginToAdd);
+                fileOps.AddToFile(loginToAdd+","+group+","+course);
                 fileOps = new FileOperations(path, _output.marksFile);
                 fileOps.AddToFile(loginToAdd);
             }

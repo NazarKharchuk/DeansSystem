@@ -63,7 +63,7 @@ namespace DeansSystem
             int command = Int32.Parse(Console.ReadLine());
             Console.Clear();
             if (command == 9) Environment.Exit(0);
-            else if (command == 0) UserCommands(); AdminCommands();
+            else if (command == 0) {UserCommands(); AdminCommands();}
             Console.Write("Enter user's login: ");
             string userLogin = Console.ReadLine();
             if (command == 1)
@@ -72,7 +72,22 @@ namespace DeansSystem
                 string password = Console.ReadLine();
                 Console.WriteLine("Enter a access level for new user:");
                 string accessLevel = Console.ReadLine();
-                admin.AddUser(userLogin, password, accessLevel);
+                if (command == 1)
+                {
+                    Console.WriteLine("Enter a password for new user:");
+                    string password = Console.ReadLine();
+                    Console.WriteLine("Enter a access level for new user:");
+                    string accessLevel = Console.ReadLine();
+                    if (accessLevel == "1")
+                    {
+                        Console.WriteLine("Enter a group for new student:");
+                        string group = Console.ReadLine();
+                        Console.WriteLine("Enter a course for new student:");
+                        string course = Console.ReadLine();
+                        admin.AddUser(userLogin, password, accessLevel, group, course);
+                    }
+                    else admin.AddUser(userLogin, password, accessLevel);
+                }
             }
             else if (command == 2) admin.RemoveUser(userLogin);
             else if (command == 3)
