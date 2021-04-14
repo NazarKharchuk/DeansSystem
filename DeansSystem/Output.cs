@@ -74,9 +74,9 @@ namespace DeansSystem
                 string accessLevel = Console.ReadLine();
                 if (accessLevel == "1")
                 {
-                    Console.WriteLine("Enter a group for new student:");
+                    Console.Write("Enter a group for new student:");
                     string group = Console.ReadLine();
-                    Console.WriteLine("Enter a course for new student:");
+                    Console.Write("Enter a course for new student:");
                     string course = Console.ReadLine();
                     admin.AddUser(userLogin, password, accessLevel, group, course);
                 }
