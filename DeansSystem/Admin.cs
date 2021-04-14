@@ -77,7 +77,7 @@ namespace DeansSystem
                 FileOperations fileOps = new FileOperations(path, _output.studentsFile);
                 string line = fileOps.GetLine(stLogin);
                 splited = line.Split(",", StringSplitOptions.RemoveEmptyEntries);
-                fileOps.ChangeInFile(stLogin, splited[0]+","+splited[1]+","+splited[2]+1);
+                fileOps.ChangeInFile(stLogin, splited[0]+","+splited[1]+","+(Int32.Parse(splited[2])+1));
                 _output.Success();
             }
         }
