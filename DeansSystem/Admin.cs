@@ -27,7 +27,17 @@ namespace DeansSystem
             }
         }
         public void RemoveUser(string loginToRemove) => _fo.RemoveFromFile(loginToRemove);
-        public void ChangeUserInformation(string loginToChange, string newLine) => _fo.ChangeInFile(loginToChange, newLine);
+
+        public void ChangeUserInformation(string loginToChange, string passw, string fileName)
+        {
+            _fo.ChangeInFile(loginToChange, passw);
+            FileOperations fileOps = new FileOperations(path, fileName);
+            string line = fileOps.GetLine(loginToChange);
+            string[] splited = line.Split(",", StringSplitOptions.RemoveEmptyEntries);
+            fileOps.ChangeInFile(loginToChange, splited[0] + "," + passw + "," + splited[2]);
+            _output.Success();
+            }
+
         public void ChangeGroup(string stLogin, string groupToChange, string fileName)
         {
             FileOperations fileOps = new FileOperations(path, fileName);

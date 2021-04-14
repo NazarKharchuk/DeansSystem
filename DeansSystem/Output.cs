@@ -85,9 +85,9 @@ namespace DeansSystem
             else if (command == "2") admin.RemoveUser(userLogin);
             else if (command == "3")
             {
-                Console.WriteLine("Enter a new user information (login and password through ',')");
-                string line = Console.ReadLine();
-                admin.ChangeUserInformation(userLogin, line);
+                Console.Write($"Enter a new {userLogin}'s password: ");
+                string passw = Console.ReadLine();
+                admin.ChangeUserInformation(userLogin, passw, logsFile);
             }
             else if (command == "4")
             {
