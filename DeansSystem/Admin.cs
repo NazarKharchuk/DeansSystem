@@ -26,21 +26,27 @@ namespace DeansSystem
                 fileOps.AddToFile(loginToAdd);
             }
         }
-        public void RemoveUser(string loginToRemove) => _fo.RemoveFromFile(loginToRemove);
 
-        public void ChangeUserInformation(string loginToChange, string passw, string fileName)
+        public void RemoveUser(string loginToRemove)
+        {
+            _fo.RemoveFromFile(loginToRemove);
+            FileOperations fileOps = new FileOperations(path, _output.marksFile);
+            fileOps.RemoveFromFile(loginToRemove);
+            fileOps = new FileOperations(path, _output.studentsFile);
+            fileOps.RemoveFromFile(loginToRemove);
+        }
+        public void ChangeUsersPassword(string loginToChange, string passw)
         {
             _fo.ChangeInFile(loginToChange, passw);
-            FileOperations fileOps = new FileOperations(path, fileName);
-            string line = fileOps.GetLine(loginToChange);
+            string line = _fo.GetLine(loginToChange);
             string[] splited = line.Split(",", StringSplitOptions.RemoveEmptyEntries);
-            fileOps.ChangeInFile(loginToChange, splited[0] + "," + passw + "," + splited[2]);
+            _fo.ChangeInFile(loginToChange, splited[0] + "," + passw + "," + splited[2]);
             _output.Success();
             }
 
-        public void ChangeGroup(string stLogin, string groupToChange, string fileName)
+        public void ChangeGroup(string stLogin, string groupToChange)
         {
-            FileOperations fileOps = new FileOperations(path, fileName);
+            FileOperations fileOps = new FileOperations(path, _output.studentsFile);
             string line = fileOps.GetLine(stLogin);
             string[] splited = line.Split(",", StringSplitOptions.RemoveEmptyEntries);
             if (splited[1][2]==groupToChange[2])
@@ -50,36 +56,28 @@ namespace DeansSystem
             }
             else _output.WrongInput();
         }
-        public void ChangeCourse(string stLogin, string fileName)
+        public void ChangeCourse(string stLogin)
         {
             bool isEnough = false;
-            FileOperations fops = new FileOperations(path, _output.studentsFile);
+            FileOperations fops = new FileOperations(path, _output.marksFile);
             string[] splited = fops.GetLine(stLogin).Split(",", StringSplitOptions.RemoveEmptyEntries);
             float total = 0;
-            int marksNumber = 0;
             for (int i = 0; i < splited.Length; i++)
             {
                 int x = 0;
                 if (Int32.TryParse(splited[i], out x))
                 {
-                    total += (float)Int32.Parse(splited[i]) / 100;
-                    marksNumber++;
+                    total += (float)Int32.Parse(splited[i]);
                 }
             }
-            if (total / marksNumber >= 0.6) isEnough = true;
+            if (total >= 60) isEnough = true;
             if (isEnough)
             {
-                FileOperations fileOps = new FileOperations(path, fileName);
+                fops.ChangeInFile(stLogin, stLogin);
+                FileOperations fileOps = new FileOperations(path, _output.studentsFile);
                 string line = fileOps.GetLine(stLogin);
                 splited = line.Split(",", StringSplitOptions.RemoveEmptyEntries);
-                string newLine = String.Empty;
-                for (int i = 0; i < splited.Length; i++)
-                {
-                    if (i == splited.Length - 1) newLine += "," + Convert.ToString(Int32.Parse(splited[i]) + 1);
-                    else if (i == 0) newLine += splited[i];
-                    else newLine += "," + splited[i];
-                }
-                fileOps.ChangeInFile(stLogin, newLine);
+                fileOps.ChangeInFile(stLogin, splited[0]+","+splited[1]+","+splited[2]+1);
                 _output.Success();
             }
         }
@@ -95,6 +93,19 @@ namespace DeansSystem
             string[] splited = _fo.GetLine(stLogin).Split(",", StringSplitOptions.RemoveEmptyEntries);
             Console.Write(stLogin+"'s course: "); _output.LineOutput(splited[splited.Length - 1]);
         }
-        public void CheckMarks(string stLogin) => _output.LineOutput(_fo.GetLine(stLogin));
+
+        public void CheckMarks(string stLogin)
+        {
+            FileOperations fops = new FileOperations(path, _output.marksFile);
+
+            string[] marks = fops.GetLine(stLogin).Split(",", StringSplitOptions.RemoveEmptyEntries);
+            string line = $"{stLogin}'s marks: ";
+            for (int i = 1; i < marks.Length; i++)
+            {
+                line += marks[i];
+                if (i + 1 < marks.Length) line += ", ";
+            }
+            _output.LineOutput(line);
+        }
     }
 }

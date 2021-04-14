@@ -87,7 +87,7 @@ namespace DeansSystem
             {
                 Console.Write($"Enter a new {userLogin}'s password: ");
                 string passw = Console.ReadLine();
-                admin.ChangeUserInformation(userLogin, passw, logsFile);
+                admin.ChangeUsersPassword(userLogin, passw);
             }
             else if (command == "4")
             {
@@ -101,9 +101,9 @@ namespace DeansSystem
                     Console.Clear();
                     Console.WriteLine("Incorrect input!");
                 }
-                admin.ChangeGroup(userLogin, group, studentsFile);
+                admin.ChangeGroup(userLogin, group);
             }
-            else if (command == "5") admin.ChangeCourse(userLogin, studentsFile);
+            else if (command == "5") admin.ChangeCourse(userLogin);
             else if (command == "6") admin.CheckCourse(userLogin);
             else if (command == "7") admin.CheckGroup(userLogin);
             else if (command == "8") admin.CheckMarks(userLogin);
