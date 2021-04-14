@@ -9,9 +9,6 @@ namespace DeansSystem
         private string fileName;
         private FileOperations fo;
         private Output _output;
-        private Student _student;
-        private Teacher _teacher;
-        private Admin _admin;
 
         public User(string login, string path, string fileName)
         {
@@ -31,22 +28,19 @@ namespace DeansSystem
                 string marksFile = _output.marksFile;
                 if (accessLevel == 3)
                 {
-                    _admin = new Admin(login, path, fileName);
-                    _output.Welcome(login);
+                    _output.Welcome();
                     _output.AdminCommands();
                     return true;
                 }
                 else if (accessLevel == 2)
                 {
-                    _teacher = new Teacher(login, path, marksFile);
-                    _output.Welcome(login);
+                    _output.Welcome();
                     _output.TeacherCommands();
                     return true;
                 }
                 else
                 {
-                    _student = new Student(login, path, marksFile);
-                    _output.Welcome(login);
+                    _output.Welcome();
                     _output.StudentCommands();
                     return true;
                 }
